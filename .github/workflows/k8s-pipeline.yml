@@ -26,3 +26,12 @@ jobs:
           file: ./src/Dockerfile  # Explicitly specify the Dockerfile location
           push: true
           tags: torresj04/primeira-pipeline-cicd:latest, torresj04/primeira-pipeline-cicd:v1
+      - name: Docker Image Builder
+        uses: docker/build-push-action@v5.3.0
+        with:
+          context: ./src
+          file: ./src.Dockerfile
+          push: true
+          tags: |
+           torresj04/k8s-pipeline:v${{ github.run_number }}
+           torresj04/k8s-pipeline:latest
