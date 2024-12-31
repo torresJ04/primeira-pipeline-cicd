@@ -22,5 +22,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
+          context: ./src          # Path to the directory containing the Dockerfile
+          file: ./src/Dockerfile  # Explicitly specify the Dockerfile location
           push: true
           tags: torresj04/primeira-pipeline-cicd:latest, torresj04/primeira-pipeline-cicd:v1
