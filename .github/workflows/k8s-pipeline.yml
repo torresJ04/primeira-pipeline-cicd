@@ -13,13 +13,14 @@ jobs:
       - name: Retrieve code
         uses: actions/checkout@v4.2.2
 
-      - name: Authenticate in Dockerhub
+      - name: Authenticate in Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }} # Ensure this is stored as a secret
-          password: ${{ secrets.DOCKERHUB_TOKEN }}    # Token or password for Docker Hub
+          username: ${{ secrets.DOCKERHUB_USERNAME }} # Ensure this is set in repository secrets
+          password: ${{ secrets.DOCKERHUB_TOKEN }}    # Docker Hub PAT stored as a secret
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           push: true
+          tags: torresj04/primeira-pipeline-cicd:latest, torresj04/primeira-pipeline-cicd:v1
