@@ -1,17 +1,25 @@
 name: ci-cd
+
 on:  
   push:
     branches: ["main"]
-  workflow_dispatch: ## allows to trigger the workflow manually
+  workflow_dispatch: # Allows triggering the workflow manually
+
 jobs:
-    CI:
-      runs-on: ubuntu-latest
-      steps:
+  CI:
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Retrieve code
         uses: actions/checkout@v4.2.2
+
       - name: Authenticate in Dockerhub
         uses: docker/login-action@v3
         with:
-          username: ${{ vars.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }} # Ensure this is stored as a secret
+          password: ${{ secrets.DOCKERHUB_TOKEN }}    # Token or password for Docker Hub
 
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          push: true
