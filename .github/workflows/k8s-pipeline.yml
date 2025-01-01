@@ -38,8 +38,6 @@ jobs:
             torresj04/k8s-pipeline:latest
 
   CD: 
-    # 1- Setup kubeconfig
-    # 2- Execute kubectl apply
     runs-on: ubuntu-latest
     needs: [CI]
 
@@ -47,12 +45,11 @@ jobs:
       - name: Retrieve code
         uses: actions/checkout@v4.2.2
 
+      - name: Set up kubeconfig
+        run: echo "${{ secrets.KUBECONFIG_CONTENT }}" > $HOME/.kube/config
+
       - name: Configuring kubernetes context
-        uses: azure/k8s-set-context@v4
-        with:
-          method: kubeconfig
-          kubeconfig: <your kubeconfig>
-          context: ${{ secrets.K8S_CONFIG }}  # current-context from kubeconfig is used as default
+        run: kubectl config use-context do-sfo2-k8s-actions
 
       - name: Manifest run
         uses: Azure/k8s-deploy@v5
